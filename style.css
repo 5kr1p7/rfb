@@ -1,0 +1,82 @@
+body {
+  color: #fafafa;
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+  
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#teams {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#teams * {
+  height: 80px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score {
+  width: 65px;
+  font-size: 40px;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+
+.delim {
+  font-weight: 900;
+  font-size: 30;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.score1 {
+  text-align: right !important;
+}
+
+.score2 {
+  text-align: left !important;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.team {
+  width: 300px;
+  font-family: 'Play', sans-serif;
+}
+
+.team img {
+  width: 25% !important;
+  height: auto !important;
+  padding: 10px;
+}
+
+#league_name {
+  text-align: center;
+  font-family: 'Play', sans-serif;
+}
+
+#app {
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  top: 43%;
+}
+
+.team, .score {
+  padding: 10px;
+  text-align: center;
+  justify-content: center;
+}

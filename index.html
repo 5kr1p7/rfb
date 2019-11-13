@@ -1,0 +1,73 @@
+<!doctype html5>
+<html lang="ru">
+<head>
+  <script src="/vue.js"></script>
+  <script src="/router.js"></script>
+  <script src="/axios.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Jura:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Play&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Online scoreboard</title>
+</head>
+<body ondragstart="return false;" ondrop="return false;">
+	<div id="app">
+		<div id="league_name" v-if="info.LeagueNameRu">{{ info.LeagueNameRu }}, {{ info.CompNameRu}}</div>
+		<div id="teams" v-if="info.GameTeams">
+			<div class="team team1">
+				<img :src="getLogo(0)">
+				<div class="team_name">{{ info.GameTeams[0].TeamName.CompTeamNameRu }}</div>
+			</div>
+			<div :class="'score score1 '+ scoreStyle(0)">{{ info.GameTeams[0].Score }}</div>
+			<div class="delim">:</div>
+			<div :class="'score score2 ' + scoreStyle(1)">{{ info.GameTeams[1].Score }}</div>
+			<div class="team team2">
+				<div class="team_name">{{ info.GameTeams[1].TeamName.CompTeamNameRu }}</div>
+				<img :src="getLogo(1)">
+			</div>
+		</div>
+	</div>
+
+
+<!-- Scripts -->
+<script langugge="javascript">
+var router = new VueRouter({
+    mode: 'history',
+    routes: []
+  });
+
+var app = new Vue({
+  router,
+  el: '#app',
+  data: {
+    info: {},
+    errors: [],
+    timer: ''
+  },
+  created() {
+    this.fetchInfo();
+    this.timer = setInterval(this.fetchInfo, 5000);
+  },
+  methods: {
+    fetchInfo() {
+      axios
+        .get('https://org.infobasket.ru/Widget/GetOnline/'+this.$route.query.game+'?format=json&lang=ru')
+        .then(response => (this.info = response.data))
+        .catch(e => { this.errors.push(e) })
+    },
+    getLogo(team) {
+       return 'https://org.infobasket.ru/Widget/GetTeamLogo/' + this.info.GameTeams[team].TeamID + '?compId=' + this.info.CompID;
+    },
+    scoreStyle(team1) {
+	team2 = +!team1;
+
+	if (this.info.GameTeams[team1].Score > this.info.GameTeams[team2].Score) {
+		return 'bold';
+	} else {
+		return '';
+	}
+    }
+  }
+});
+</script>
+</body>
+</html>
